@@ -1,0 +1,15 @@
+
+version: '3.6'
+services:
+
+  # App Backend PostgreSQL
+  postgres:
+    image: postgres:11.7-alpine
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+      POSTGRES_URL: postgres://admin:password@localhost:5432/job-board
+      POSTGRES_DB: fullstackjobs
+      POSTGRES_HOST: postgres
+    ports:
+      - "5432:5432"
