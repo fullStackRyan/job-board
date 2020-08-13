@@ -6,7 +6,6 @@ import doobie.util.transactor.Transactor
 import io.github.jobboard.model.{JobPost, JobPostDetails}
 
 class JobPostRepoImpl(xa: Transactor[IO]) extends JobPostRepo {
-
   override def createPost(jobPost: JobPost): IO[String] = {
     for {
       i <- JobQueries.insert(jobPost).run.transact(xa)
@@ -16,13 +15,12 @@ class JobPostRepoImpl(xa: Transactor[IO]) extends JobPostRepo {
     } yield s
   }
 
-  override def updatePost(id: String, jobPostDetails: JobPostDetails): IO[Int] = {
-    JobQueries.update(id, jobPostDetails).run.transact(xa)
+  override def updatePost(id: String, details: JobPostDetails) = {
+    JobQueries.update(id, details).run.transact(xa)
   }
 
-  override def getPost(id: String): IO[Option[JobPost]] = {
+  override def getPost(id: String) = {
     JobQueries.searchWithId(id).option.transact(xa)
   }
-
 
 }

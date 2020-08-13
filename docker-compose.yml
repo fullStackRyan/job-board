@@ -8,8 +8,22 @@ services:
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: password
-      POSTGRES_URL: postgres://admin:password@localhost:5432/job-board
+      POSTGRES_URL: postgres://admin:password@postgres:5432/job-board
       POSTGRES_DB: fullstackjobs
       POSTGRES_HOST: postgres
     ports:
       - "5432:5432"
+
+  # App Backend
+  job-board:
+    build: ./
+    volumes:
+      - ./:/usr/src/job-board
+    command: sbt run
+    working_dir: /usr/src/job-board
+    ports:
+      - "8080:8080"
+    environment:
+      POSTGRES_URI: postgres://admin:password@postgres:5432/job-board
+    depends_on:
+      - postgres
