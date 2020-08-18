@@ -29,6 +29,16 @@ object JobQueries {
       .update
   }
 
+  // search range
+  def getAll: doobie.Query0[JobPost] = {
+    sql"""
+         |SELECT * FROM jobs
+       """.stripMargin
+      .query[JobPost]
+  }
+
+
+
   def insert(jobPost: JobPost): doobie.Update0 = {
     sql"""
          |INSERT INTO jobs (
