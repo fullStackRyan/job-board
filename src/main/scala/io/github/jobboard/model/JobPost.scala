@@ -1,7 +1,8 @@
 package io.github.jobboard.model
 
 import cats.Bifunctor.ops.toAllBifunctorOps
-import cats.implicits.toBifunctorOps
+import cats.Bitraverse.ops.toAllBitraverseOps
+import cats.implicits.{catsStdBitraverseForEither, toBifunctorOps}
 import doobie._
 import doobie.postgres.circe.json.implicits._
 import io.circe.generic.semiauto.{deriveDecoder, deriveEncoder}

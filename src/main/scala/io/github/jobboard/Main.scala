@@ -2,17 +2,16 @@ package io.github.jobboard
 
 import cats.data.Kleisli
 import cats.effect.{ExitCode, IO, IOApp}
-import cats.implicits._
 import doobie.util.transactor.Transactor
 import fs2.Stream
 import io.github.jobboard.config.{Config, LoadConfig, ServerConfig}
-import io.github.jobboard.database.{Database, JobPostRepoImpl, JobQueries}
+import io.github.jobboard.database.{Database, JobPostRepoImpl}
 import io.github.jobboard.routing.JobPostRoutes
 import org.http4s.implicits._
 import org.http4s.server.Router
 import org.http4s.server.blaze.BlazeServerBuilder
 import org.http4s.{Request, Response}
-import pureconfig.generic.auto._
+
 import scala.concurrent.ExecutionContext.global
 
 object Main extends IOApp {
