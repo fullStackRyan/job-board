@@ -7,7 +7,7 @@ object JobQueries {
 
   def createDb: doobie.Update0 = {
     sql"""
-         |CREATE DATABASE IF NOT EXISTS fullstackjobs
+         |CREATE DATABASE IF NOT EXISTS jobsdb
        """
       .update
   }

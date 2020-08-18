@@ -1,5 +1,6 @@
 package io.github.jobboard.model
 
+import cats.Bifunctor.ops.toAllBifunctorOps
 import cats.implicits.toBifunctorOps
 import doobie._
 import doobie.postgres.circe.json.implicits._
@@ -33,6 +34,6 @@ object JobPostDetails {
     Put[Json].contramap(_.asJson)
 
   //tells doobie how to read JobPostDetails from json column
-  //  implicit val get: Get[JobPostDetails] =
-  //    Get[Json].temap(_.as[JobPostDetails].leftMap(_.show))
+//    implicit val get: Get[JobPostDetails] =
+//      Get[Json].temap(_.as[JobPostDetails].leftMap(_.show))
 }

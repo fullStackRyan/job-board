@@ -23,4 +23,6 @@ class JobPostRepoImpl(xa: Transactor[IO]) extends JobPostRepo {
     JobQueries.searchWithId(id).option.transact(xa)
   }
 
+  def getPosts: IO[List[JobPost]] = ???
+
 }

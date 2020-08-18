@@ -23,8 +23,8 @@ object JobPostRoutes {
         req.decode[JobPostDetails] { post =>
           jobPostRepo.updatePost(id, post).flatMap(_ => Accepted())
         }.handleErrorWith(e => BadRequest(e.getMessage))
-      //      case _@GET -> Root / "posts" =>
-      //        jobPostRepo.getPosts.flatMap(posts => Ok(posts))
+      case _@GET -> Root / "posts" =>
+        jobPostRepo.getPosts.flatMap(posts => Ok(posts))
       case _@GET -> Root / "posts" / id =>
         jobPostRepo.getPost(id) flatMap {
           case None => NotFound()

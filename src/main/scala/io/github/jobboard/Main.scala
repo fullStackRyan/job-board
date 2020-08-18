@@ -6,7 +6,7 @@ import cats.implicits._
 import doobie.util.transactor.Transactor
 import fs2.Stream
 import io.github.jobboard.config.{Config, ServerConfig}
-import io.github.jobboard.database.{Database, JobPostRepoImpl}
+import io.github.jobboard.database.{Database, JobPostRepoImpl, JobQueries}
 import io.github.jobboard.routing.JobPostRoutes
 import org.http4s.implicits._
 import org.http4s.server.Router

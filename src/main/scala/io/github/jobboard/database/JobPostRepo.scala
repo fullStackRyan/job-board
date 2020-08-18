@@ -10,5 +10,5 @@ trait JobPostRepo {
 
   def getPost(id: String): IO[Option[JobPost]]
 
-  //  def getPosts: IO[List[JobPost]]
+  def getPosts: IO[List[JobPost]]
 }
