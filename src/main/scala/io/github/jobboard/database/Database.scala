@@ -10,8 +10,9 @@ import io.github.jobboard.config.DbConfig
 
 object Database {
 
-  def transactor(dbConfig: DbConfig)(implicit csContextShift: ContextShift[IO]): IO[HikariTransactor[IO]] = {
+  def transactor(dbConfig: DbConfig)(implicit csContextShift: ContextShift[IO]): Resource[IO, HikariTransactor[IO]] = {
     val config = new HikariConfig()
+    config.setDriverClassName("org.postgresql.Driver")
 
     config.setJdbcUrl(dbConfig.url)
     config.setUsername(dbConfig.username)
@@ -24,7 +25,7 @@ object Database {
       transactor <- Resource.liftF(IO(HikariTransactor.apply[IO](new HikariDataSource(config), connectionThreadPool, Blocker.liftExecutionContext(cachedThreadPool))))
     } yield transactor
 
-    resources.use(IO(_))
+    resources
   }
 
   def bootstrap(xa: Transactor[IO]): IO[Int] = {

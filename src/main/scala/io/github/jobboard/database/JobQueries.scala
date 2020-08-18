@@ -22,6 +22,13 @@ object JobQueries {
       .update
   }
 
+  def get: doobie.Update0 = {
+    sql"""
+         |SELECT * FROM jobs
+       """.stripMargin
+      .update
+  }
+
   def insert(jobPost: JobPost): doobie.Update0 = {
     sql"""
          |INSERT INTO jobs (

@@ -15,6 +15,8 @@ object JobPostRoutes {
     import dsl._
 
     HttpRoutes.of[IO] {
+      case _@GET -> Root / "health" =>
+        Ok("ok")
       case req@POST -> Root / "posts" =>
         req.decode[JobPost] { post =>
           jobPostRepo.createPost(post).flatMap(id => Created(id))
