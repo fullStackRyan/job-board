@@ -11,3 +11,4 @@ project/project/
 .idea_modules/
 .keys/
 .logs/
+secrets.env
