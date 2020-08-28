@@ -9,7 +9,6 @@ import scala.io.{BufferedSource, Source}
 
 case class ServerConfig(port: Int, host: String)
 
-
 case class DbConfig(url: String, username: String, password: String, poolSize: Int)
 
 case class Config(serverConfig: ServerConfig, dbConfig: DbConfig)
@@ -18,7 +17,6 @@ object Config {
   implicit val configDecoder: Decoder[Config] = deriveDecoder[Config]
   implicit val serverDecoder: Decoder[ServerConfig] = deriveDecoder[ServerConfig]
   implicit val dbDecoder: Decoder[DbConfig] = deriveDecoder[DbConfig]
-
 
 
   def load(): IO[Config] = {

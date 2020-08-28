@@ -22,8 +22,8 @@ object JobPostRoutes {
           jobPostRepo.createPost(post).flatMap(id => Created(id))
         }.handleErrorWith(e => BadRequest(e.getMessage))
       case req@PUT -> Root / "posts" / id =>
-        req.decode[JobPostDetails] { post =>
-          jobPostRepo.updatePost(id, post).flatMap(_ => Accepted())
+        req.decode[JobPost] { post =>
+          jobPostRepo.updatePost(post).flatMap(_ => Accepted())
         }.handleErrorWith(e => BadRequest(e.getMessage))
       case _@GET -> Root / "posts" =>
         jobPostRepo.getPosts.flatMap(posts => Ok(posts))

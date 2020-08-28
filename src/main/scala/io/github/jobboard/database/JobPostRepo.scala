@@ -6,9 +6,11 @@ import io.github.jobboard.model.{JobPost, JobPostDetails}
 trait JobPostRepo {
   def createPost(jobPost: JobPost): IO[String]
 
-  def updatePost(id: String, details: JobPostDetails): IO[Int]
+  def updatePost(jobPost: JobPost): IO[Int]
 
   def getPost(id: String): IO[Option[JobPost]]
 
+//  def query[F[_], A](attempt: A): F[A]
+//
   def getPosts: IO[List[JobPost]]
 }

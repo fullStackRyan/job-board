@@ -15,8 +15,8 @@ class JobPostRepoImpl(xa: Transactor[IO]) extends JobPostRepo {
     } yield s
   }
 
-  override def updatePost(id: String, details: JobPostDetails): IO[Int] = {
-    JobQueries.update(id, details).run.transact(xa)
+  override def updatePost(jobPost: JobPost): IO[Int] = {
+    JobQueries.update(jobPost).run.transact(xa)
   }
 
   override def getPost(id: String): IO[Option[JobPost]] = {

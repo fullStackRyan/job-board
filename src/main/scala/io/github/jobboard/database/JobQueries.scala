@@ -43,7 +43,9 @@ object JobQueries {
       .update
   }
 
-  def update(id: String, details: JobPostDetails): doobie.Update0 = {
+  def update(jobPost: JobPost): doobie.Update0 = {
+    val id = jobPost.id
+    val details = jobPost.details
     sql"""
          |UPDATE jobs
          |SET details = $details
