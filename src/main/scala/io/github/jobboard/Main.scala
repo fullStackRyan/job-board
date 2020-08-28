@@ -11,6 +11,7 @@ import org.http4s.implicits._
 import org.http4s.server.Router
 import org.http4s.server.blaze.BlazeServerBuilder
 import org.http4s.{Request, Response}
+import pureconfig.generic.auto._
 
 import scala.concurrent.ExecutionContext.global
 

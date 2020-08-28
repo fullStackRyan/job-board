@@ -15,7 +15,7 @@ object JobQueries {
   def createTable: doobie.Update0 = {
     sql"""
          |CREATE TABLE IF NOT EXISTS jobs (
-         |  id UUID PRIMARY KEY,
+         |  id TEXT PRIMARY KEY,
          |  details JSON NOT NULL
          |)
        """.stripMargin
@@ -46,8 +46,8 @@ object JobQueries {
   def update(id: String, details: JobPostDetails): doobie.Update0 = {
     sql"""
          |UPDATE jobs
-         |SET id = $id
-         |WHERE details = $id
+         |SET details = $details
+         |WHERE id = $id
        """.stripMargin
       .update
   }
