@@ -7,6 +7,7 @@ import fs2.Stream
 import io.github.jobboard.config.{Config, LoadConfig, ServerConfig}
 import io.github.jobboard.database.{Database, JobPostRepoImpl}
 import io.github.jobboard.routing.JobPostRoutes
+import org.flywaydb.core.Flyway
 import org.http4s.implicits._
 import org.http4s.server.Router
 import org.http4s.server.blaze.BlazeServerBuilder
@@ -31,10 +32,16 @@ object Main extends IOApp {
       .serve
   }
 
+  def initDB(): Int = {
+    val flyway = Flyway.configure().dataSource("jdbc:postgresql://localhost:5432/jobsdb", "admin", "password").baselineOnMigrate(true).load()
+    flyway.migrate()
+  }
+
   override def run(args: List[String]): IO[ExitCode] = {
     val stream = for {
       config <- Stream.eval(LoadConfig.load[IO, Config])
       xa <- Stream.resource(Database.transactor(config.dbConfig))
+      _ = initDB()
       _ <- Stream.eval(Database.bootstrap(xa))
       exitCode <- serveStream(xa, config.serverConfig)
     } yield exitCode

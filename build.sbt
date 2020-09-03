@@ -1,3 +1,4 @@
+
 name := "job-board"
 
 version := "1.0"
@@ -25,7 +26,9 @@ libraryDependencies ++= {
     "io.circe" %% "circe-parser" % circeVersion,
     "com.github.pureconfig" %% "pureconfig" % "0.13.0",
     "org.slf4j" % "slf4j-api" % "1.7.5",
-    "ch.qos.logback" % "logback-classic" % "1.0.9"
+    "ch.qos.logback" % "logback-classic" % "1.0.9",
+    "org.flywaydb" % "flyway-core" % "6.5.5",
+    "org.typelevel" %% "cats-mtl-core" % "0.7.0"
   )
 
 }
