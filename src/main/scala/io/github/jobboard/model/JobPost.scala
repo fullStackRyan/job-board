@@ -1,18 +1,11 @@
 package io.github.jobboard.model
 
-import cats.Bifunctor.ops.toAllBifunctorOps
-import cats.Bitraverse.ops.toAllBitraverseOps
-import cats.implicits.{catsStdBitraverseForEither, toBifunctorOps}
+import cats.implicits.toShow
 import doobie._
 import doobie.postgres.circe.json.implicits._
 import io.circe.generic.semiauto.{deriveDecoder, deriveEncoder}
 import io.circe.syntax._
 import io.circe.{Decoder, Encoder, Json}
-import io.circe.{Decoder, Encoder}
-import io.circe.generic.semiauto.{deriveDecoder, deriveEncoder}
-import doobie.postgres.circe.json.implicits._
-import doobie._
-import io.circe.syntax._
 
 case class JobPost(id: String, details: JobPostDetails)
 
@@ -34,7 +27,7 @@ object JobPostDetails {
   implicit val put: Put[JobPostDetails] =
     Put[Json].contramap(_.asJson)
 
-  //tells doobie how to read JobPostDetails from json column
-//    implicit val get: Get[JobPostDetails] =
-//      Get[Json].temap(_.as[JobPostDetails].leftMap(_.show))
+//  tells doobie how to read JobPostDetails from json column
+    implicit val get: Get[JobPostDetails] =
+      Get[Json].temap(_.as[JobPostDetails].left.map(_.show))
 }

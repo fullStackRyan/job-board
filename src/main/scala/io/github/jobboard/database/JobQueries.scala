@@ -24,6 +24,13 @@ object JobQueries {
 
   def getAll: doobie.Query0[JobPost] = {
     sql"""
+         |SELECT id, details FROM jobs
+       """.stripMargin
+      .query[JobPost]
+  }
+
+  def search(): doobie.Query0[JobPost] = {
+    sql"""
          |SELECT * FROM jobs
        """.stripMargin
       .query[JobPost]

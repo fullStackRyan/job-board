@@ -10,7 +10,10 @@ trait JobPostRepo {
 
   def getPost(id: String): IO[Option[JobPost]]
 
+  def getPosts: IO[List[JobPost]]
+
+  def searchPost(): IO[List[JobPost]]
+
 //  def query[F[_], A](attempt: A): F[A]
 //
-  def getPosts: IO[List[JobPost]]
 }

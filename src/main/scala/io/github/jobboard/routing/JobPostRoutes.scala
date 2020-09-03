@@ -15,24 +15,24 @@ object JobPostRoutes {
     import dsl._
 
     HttpRoutes.of[IO] {
-      case _@GET -> Root / "health" =>
-        Ok("ok")
+      case _@GET -> Root / "health" => Ok("ok")
       case req@POST -> Root / "posts" =>
         req.decode[JobPost] { post =>
           jobPostRepo.createPost(post).flatMap(id => Created(id))
         }.handleErrorWith(e => BadRequest(e.getMessage))
-      case req@PUT -> Root / "posts" / id =>
+      case req@PUT -> Root / "posts" =>
         req.decode[JobPost] { post =>
           jobPostRepo.updatePost(post).flatMap(_ => Accepted())
         }.handleErrorWith(e => BadRequest(e.getMessage))
       case _@GET -> Root / "posts" =>
-        jobPostRepo.getPosts.flatMap(posts => Ok(posts))
+        jobPostRepo.searchPost().flatMap(posts => {
+          Ok(posts)
+        })
       case _@GET -> Root / "posts" / id =>
         jobPostRepo.getPost(id) flatMap {
           case None => NotFound()
           case Some(post) => Ok(post)
         }
     }
-
   }
 }

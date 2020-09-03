@@ -27,4 +27,7 @@ class JobPostRepoImpl(xa: Transactor[IO]) extends JobPostRepo {
     JobQueries.getAll.to[List].transact(xa)
   }
 
+  def searchPost(): IO[List[JobPost]] = JobQueries.search().to[List].transact(xa)
+
+
 }
