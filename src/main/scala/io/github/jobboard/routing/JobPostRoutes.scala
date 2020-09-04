@@ -14,25 +14,39 @@ object JobPostRoutes {
     val dsl = new Http4sDsl[IO] {}
     import dsl._
 
-    HttpRoutes.of[IO] {
-      case _@GET -> Root / "health" => Ok("ok")
-      case req@POST -> Root / "posts" =>
-        req.decode[JobPost] { post =>
+    def postAJob(req: Request[IO]): IO[Response[IO]] =
+      req
+        .decode[JobPost] { post =>
           jobPostRepo.createPost(post).flatMap(id => Created(id))
-        }.handleErrorWith(e => BadRequest(e.getMessage))
-      case req@PUT -> Root / "posts" =>
-        req.decode[JobPost] { post =>
-          jobPostRepo.updatePost(post).flatMap(_ => Accepted())
-        }.handleErrorWith(e => BadRequest(e.getMessage))
-      case _@GET -> Root / "posts" =>
-        jobPostRepo.searchPost().flatMap(posts => {
-          Ok(posts)
-        })
-      case _@GET -> Root / "posts" / id =>
-        jobPostRepo.getPost(id) flatMap {
-          case None => NotFound()
-          case Some(post) => Ok(post)
         }
+        .handleErrorWith(e => BadRequest(e.getMessage))
+
+    def updateJobPost(req: Request[IO]): IO[Response[IO]] =
+      req
+        .decode[JobPost] { post =>
+          jobPostRepo.updatePost(post).flatMap(_ => Accepted())
+        }
+        .handleErrorWith(e => BadRequest(e.getMessage))
+
+    def getAllJobPosts: IO[Response[IO]] =
+      jobPostRepo.searchPost().flatMap { posts =>
+        Ok(posts)
+      }
+
+    def getPostById(id: String): IO[Response[IO]] =
+      jobPostRepo.getPost(id) flatMap {
+        case None       => NotFound()
+        case Some(post) => Ok(post)
+      }
+
+    HttpRoutes.of[IO] {
+      case _@GET -> Root / "health"     => Ok("ok")
+      case req@ POST -> Root / "posts"  => postAJob(req)
+      case req@ PUT -> Root / "posts"   => updateJobPost(req)
+      case _@GET -> Root / "posts"      => getAllJobPosts
+      case _@GET -> Root / "posts" / id => getPostById(id)
     }
+
   }
+
 }
