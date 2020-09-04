@@ -15,8 +15,8 @@ object JobPostRoutes {
     import dsl._
 
     def postAJob(req: Request[IO]): IO[Response[IO]] =
-      req
-        .decode[JobPost] { post =>
+          req
+            .decode[JobPost] { post =>
           jobPostRepo.createPost(post).flatMap(id => Created(id))
         }
         .handleErrorWith(e => BadRequest(e.getMessage))
@@ -40,11 +40,11 @@ object JobPostRoutes {
       }
 
     HttpRoutes.of[IO] {
-      case req@ POST -> Root / "posts"  => postAJob(req)
-      case req@ PUT -> Root / "posts"   => updateJobPost(req)
-      case _@GET -> Root / "posts"      => getAllJobPosts
-      case _@GET -> Root / "posts" / id => getPostById(id)
-      case _@GET -> Root / "ping"     => Ok("ping")
+      case req@POST -> Root / "posts"  => postAJob(req)
+      case req@PUT -> Root / "posts"   => updateJobPost(req)
+      case GET -> Root / "posts"      => getAllJobPosts
+      case GET -> Root / "posts" / id => getPostById(id)
+      case GET -> Root / "ping"       => Ok("ping")
     }
 
   }

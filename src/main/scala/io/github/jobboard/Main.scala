@@ -32,7 +32,7 @@ object Main extends IOApp {
       .serve
   }
 
-  def initDB(): Int = {
+  def initDB(): IO[Int] = IO {
     val flyway = Flyway.configure().dataSource("jdbc:postgresql://localhost:5432/jobsdb", "admin", "password").baselineOnMigrate(true).load()
     flyway.migrate()
   }
@@ -41,7 +41,7 @@ object Main extends IOApp {
     val stream = for {
       config <- Stream.eval(LoadConfig.load[IO, Config])
       xa <- Stream.resource(Database.transactor(config.dbConfig))
-      _ = initDB()
+      _ <- Stream.eval(initDB())
       _ <- Stream.eval(Database.bootstrap(xa))
       exitCode <- serveStream(xa, config.serverConfig)
     } yield exitCode

@@ -24,10 +24,7 @@ class JobPostRoutingSpec extends AnyFreeSpec with Matchers {
     }
             """
 
-      val expectedJson =
-        json"""
-
-            """
+      val expected =
 
 
     }
