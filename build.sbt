@@ -28,7 +28,9 @@ libraryDependencies ++= {
     "org.slf4j" % "slf4j-api" % "1.7.5",
     "ch.qos.logback" % "logback-classic" % "1.0.9",
     "org.flywaydb" % "flyway-core" % "6.5.5",
-    "org.typelevel" %% "cats-mtl-core" % "0.7.0"
+    "org.typelevel" %% "cats-mtl-core" % "0.7.0",
+    "org.scalactic" %% "scalactic" % "3.2.0",
+    "org.scalatest" %% "scalatest" % "3.2.0" % "test"
   )
 
 }
