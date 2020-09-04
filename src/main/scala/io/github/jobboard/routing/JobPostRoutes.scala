@@ -40,11 +40,11 @@ object JobPostRoutes {
       }
 
     HttpRoutes.of[IO] {
-      case _@GET -> Root / "health"     => Ok("ok")
       case req@ POST -> Root / "posts"  => postAJob(req)
       case req@ PUT -> Root / "posts"   => updateJobPost(req)
       case _@GET -> Root / "posts"      => getAllJobPosts
       case _@GET -> Root / "posts" / id => getPostById(id)
+      case _@GET -> Root / "ping"     => Ok("ping")
     }
 
   }
