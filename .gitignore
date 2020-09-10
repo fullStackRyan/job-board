@@ -12,3 +12,4 @@ project/project/
 .keys/
 .logs/
 secrets.env
+.abc
